@@ -1,0 +1,29 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak-server
+    restart: unless-stopped
+    environment:
+      - KEYCLOAK_ADMIN=arjan
+      - KEYCLOAK_ADMIN_PASSWORD=p@ssw0rd
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/keycloak.lab.pem
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/keycloak.lab.key
+      - KC_HOSTNAME=keycloak.lab
+      # - KC_HEALTH_ENABLED=true
+      # - KC_METRICS_ENABLED=true
+    command: start-dev
+    volumes:
+      - ./certs/:/opt/keycloak/conf/:ro
+      - keycloak-data:/opt/keycloak/data
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.133
+    mac_address: 02:42:C0:A8:01:85
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  keycloak-data:
+    name: keycloak-data
