@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Create macvlan network for
+# Create macvlan network
 docker network create \
   --driver macvlan \
   --subnet=192.168.1.0/24 \

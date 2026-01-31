@@ -1,0 +1,21 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    restart: unless-stopped
+    volumes:
+      - ./certs/:/etc/nginx/ssl/:ro
+      - ./sites/:/sites/:ro
+      - ./config/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.131
+    mac_address: 02:42:C0:A8:01:83
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  nginx-data:
+    name: nginx-data
