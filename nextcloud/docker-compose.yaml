@@ -1,0 +1,35 @@
+services:
+  nextcloud:
+    image: ghcr.io/nextcloud-releases/all-in-one:latest
+    container_name: nextcloud-aio-mastercontainer
+    restart: always
+    init: true
+    stop_signal: SIGTERM
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - nextcloud_aio_backupdir:/mnt/docker-aio-backup
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/certs:ro
+      - ./certs/nextcloud.lab.crt:/etc/letsencrypt/live/nextcloud.lab/fullchain.pem:ro
+      - ./certs/nextcloud.lab.key:/etc/letsencrypt/live/nextcloud.lab/privkey.pem:ro
+    environment:
+      - CERTS_DIR=/certs
+      - NEXTCLOUD_DOMAIN=nextcloud.lab
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.134
+    mac_address: 02:42:C0:A8:01:86
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  nextcloud_aio_mastercontainer:
+    name: nextcloud_aio_mastercontainer
+  nextcloud_aio_backupdir:
+    name: nextcloud_aio_backupdir
