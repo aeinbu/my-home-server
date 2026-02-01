@@ -9,4 +9,11 @@ docker network create \
   -o parent=enp3s0f1 \
   my-macvlan-network
 
-echo "Network my-macvlan-network created successfully"
+docker network create \
+  --driver bridge \
+  --subnet=172.20.0.0/24 \
+  --ip-range=172.20.0.128/25 \
+  --gateway=172.20.0.1 \
+  my-docker-to-docker-bridge
+
+echo "Networks my-macvlan-network and my-docker-to-docker-bridge created successfully"
