@@ -1,0 +1,25 @@
+services:
+  immich:
+    image: immich:latest
+    container_name: immich-server
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/config:ro
+      - ./certs:/etc/certs:ro
+      - immich-data:/data
+    environment:
+      - TZ=Europe/Oslo
+    networks:
+      my-macvlan-network:
+        ipv4_address: #REPLACE_THIS_WITH_CORRECT_IP_ADDRESS 192.168.1.131
+    mac_address: #REPLACE_THIS_WITH_CORRECT_MAC_ADDRESS 02:42:C0:A8:01:83
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  immich-data:
+    name: immich-data
