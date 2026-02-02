@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<accessControl allowRegex="true">
+
+  <site id=".*">
+    <content id=".*">
+
+      <allow permission="ChangeStatus" mustBeAuthorized="false">
+        <header name="role" value="editor"/>
+        <querystring name="role" value="editor"/>
+      </allow>
+
+      <allow permission="ListContent" mustBeAuthorized="false">
+        <header name="role" value="editor"/>
+        <querystring name="role" value="editor"/>
+      </allow>
+
+      <allow permission="CreateOrModify" mustBeAuthorized="false">
+        <header name="role" value="editor"/>
+        <header name="role" value="contributor"/>
+        <querystring name="role" value="editor"/>
+        <querystring name="role" value="contributor"/>
+      </allow>
+
+      <allow permission="Review" mustBeAuthorized="false">
+        <header name="role" value="editor"/>
+        <header name="role" value="contributor"/>
+        <header name="role" value="reviewer"/>
+        <querystring name="role" value="editor"/>
+        <querystring name="role" value="contributor"/>
+        <querystring name="role" value="reviewer"/>
+      </allow>
+
+    </content>
+  </site>
+
+</accessControl>

@@ -1,0 +1,31 @@
+<!-- https://github.com/Metamory/Metamory.Server/tree/master/Metamory.WebApi -->
+<?xml version="1.0" encoding="utf-8" ?>
+<accessControl allowRegex="true">
+
+  <site id=".*">
+    <content id=".*">
+
+      <allow permission="ChangeStatus" mustBeAuthorized="true">
+        <claim type="https://metamory.server/roles" value="editor"/>
+      </allow>
+
+      <allow permission="ListContent" mustBeAuthorized="true">
+        <claim type="https://metamory.server/roles" value="editor"/>
+      </allow>
+
+      <allow permission="CreateOrModify" mustBeAuthorized="true">
+        <claim type="https://metamory.server/roles" value="editor"/>
+        <claim type="https://metamory.server/roles" value="contributor"/>
+      </allow>
+
+      <allow permission="Review" mustBeAuthorized="true">
+        <claim type="https://metamory.server/roles" value="editor"/>
+        <claim type="https://metamory.server/roles" value="contributor"/>
+        <claim type="https://metamory.server/roles" value="reviewer"/>
+        <username name="some-user-name" />
+      </allow>
+
+    </content>
+  </site>
+
+</accessControl>

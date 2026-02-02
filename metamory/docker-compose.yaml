@@ -1,0 +1,32 @@
+services:
+  metamory:
+    user: "root:root"
+    image: aeinbu/metamory:latest-x64
+    container_name: metamory-server
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+      - 5001:5001
+    volumes:
+      - ./config/authorization/no-access-control-at-all.config.xml:/authorization/accessControl.config.xml:ro
+      - ./certs/metamory.lab.pfx:/https/cert.pfx:ro
+      - metamory-data:/data/
+    environment:
+      - CertificatePassword=pass
+      # - Authentication__Schemes__Bearer__Authority=https://keycloak.lab/auth/realms/lab-realm
+      - noAuth=true
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.130
+    mac_address: 02:42:C0:A8:01:82
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  metamory-data:
+    name: metamory-data
+
+
+
