@@ -1,0 +1,29 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq
+    hostname: rabbitmq  # Used as part of the node name (rabbit@rabbitmq); keep stable for data persistence
+    restart: unless-stopped
+    ports:
+      - "5671:5671"    # AMQP+TLS
+      - "5672:5672"    # AMQP
+    volumes:
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./certs:/etc/certs:ro
+      - ~/.ssl/rootCA.pem:/etc/ssl/rootCA.pem:ro
+      - rabbitmq-data:/var/lib/rabbitmq
+    environment:
+      - TZ=Europe/Oslo
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.134
+    mac_address: 02:42:C0:A8:01:86
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  rabbitmq-data:
+    name: rabbitmq-data
