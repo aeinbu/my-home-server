@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
+    volumes:
+      - ./config:/config:ro
+      - ./certs:/etc/certs:ro
+      - ~/.ssl/rootCA.pem:/etc/ssl/rootCA.pem:ro
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - TZ=Europe/Oslo
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=postgres
+    # Fix TLS key permissions: postgres requires the key to be owned by uid 999 (postgres user)
+    entrypoint: ["/bin/bash", "-c", "install -m 600 -o 999 -g 999 /etc/certs/postgres.lab.key /tmp/server.key && exec docker-entrypoint.sh postgres"]
+    command: ["-c", "config_file=/config/postgresql.conf", "-c", "hba_file=/config/pg_hba.conf"]
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.135
+    mac_address: 02:42:C0:A8:01:87
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    volumes:
+      - ./certs/pgadmin.lab.crt:/certs/server.cert:ro
+      - ./certs/pgadmin.lab.key:/certs/server.key:ro
+      - ~/.ssl/rootCA.pem:/etc/ssl/rootCA.pem:ro
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      - TZ=Europe/Oslo
+      - PGADMIN_DEFAULT_EMAIL=arjan@einbu.no
+      - PGADMIN_DEFAULT_PASSWORD=changeme
+      - PGADMIN_ENABLE_TLS=True
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.136
+    mac_address: 02:42:C0:A8:01:88
+
+networks:
+  my-macvlan-network:
+    external: true
+
+volumes:
+  postgres-data:
+    name: postgres-data
+  pgadmin-data:
+    name: pgadmin-data
