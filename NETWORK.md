@@ -14,6 +14,12 @@ All containers on the lab environment use the `my-macvlan-network` with the foll
 | **PostgreSQL** | postgres | 192.168.1.135 | 02:42:C0:A8:01:87 | `/containers/postgres` |
 | **pgAdmin** | pgadmin | 192.168.1.136 | 02:42:C0:A8:01:88 | `/containers/postgres` |
 
+## Virtual Machines (macvtap on enp3s0f1)
+
+| VM | IP Address | MAC Address | Setup |
+|----|-----------|-----------|-------|
+| **win11** | 192.168.1.137 (static, set in Windows) | 52:54:00:AF:74:D9 | `win11-lan.sh` |
+
 ## DNS Records
 
 | Hostname | IP Address | Service |
@@ -25,6 +31,7 @@ All containers on the lab environment use the `my-macvlan-network` with the foll
 | rabbitmq.lab | 192.168.1.134 | RabbitMQ message broker |
 | postgres.lab | 192.168.1.135 | PostgreSQL database |
 | pgadmin.lab | 192.168.1.136 | pgAdmin web UI |
+| windows.lab | 192.168.1.137 | Virtual machine running Windows 11 |
 
 ## SSL Certificates
 
@@ -40,15 +47,15 @@ Generated certificates are stored in each service's `certs/` folder:
 - **Base network:** 192.168.1.0/24
 - **Gateway:** 192.168.1.1
 - **Parent interface:** enp3s0f1
-- **Next available IP:** 192.168.1.137
+- **Next available IP:** 192.168.1.138
 - **MAC pattern:** 02:42:C0:A8:01:XX (where XX = decimal 83-89 currently)
 
 ## Adding New Services
 
 When adding a new service:
 
-1. Pick the next available IP (e.g., 192.168.1.137)
-2. Calculate next MAC: 02:42:C0:A8:01:89 (hex: 137 = 0x89, next after pgadmin's 0x88)
+1. Pick the next available IP (e.g., 192.168.1.138)
+2. Calculate next MAC: 02:42:C0:A8:01:8A (hex: 138 = 0x8A)
 3. Add to this table
 4. Generate certificate: `./create-domain-cert.sh <name> <domain>`
 5. Update DNS records
