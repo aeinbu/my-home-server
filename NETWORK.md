@@ -14,6 +14,7 @@ All containers on the lab environment use the `my-macvlan-network` with the foll
 | **PostgreSQL** | postgres | 192.168.1.135 | 02:42:C0:A8:01:87 | `/containers/postgres` |
 | **pgAdmin** | pgadmin | 192.168.1.136 | 02:42:C0:A8:01:88 | `/containers/postgres` |
 | **gitlab** | gitlab | 192.168.1.138 | 02:42:C0:A8:01:8A | `/containers/gitlab` |
+| **immich** | immich_proxy | 192.168.1.139 | 02:42:C0:A8:01:8B | `/containers/immich` |
 
 ## Virtual Machines (macvtap on enp3s0f1)
 
@@ -34,6 +35,7 @@ All containers on the lab environment use the `my-macvlan-network` with the foll
 | pgadmin.lab | 192.168.1.136 | pgAdmin web UI |
 | windows.lab | 192.168.1.137 | Virtual machine running Windows 11 |
 | gitlab.lab | 192.168.1.138 | GitLab |
+| immich.lab | 192.168.1.139 | Immich (via nginx TLS proxy) |
 
 ## SSL Certificates
 
@@ -43,13 +45,14 @@ Generated certificates are stored in each service's `certs/` folder:
 - `keycloak/certs/keycloak.lab.*` - For Keycloak
 - `rabbitmq/certs/rabbitmq.lab.*` - For RabbitMQ
 - `postgres/certs/postgres.lab.*` - For PostgreSQL
+- `immich/certs/immich.lab.*` - For Immich (nginx proxy)
 
 ## Notes
 
 - **Base network:** 192.168.1.0/24
 - **Gateway:** 192.168.1.1
 - **Parent interface:** enp3s0f1
-- **Next available IP:** 192.168.1.139
+- **Next available IP:** 192.168.1.140
 - **MAC pattern:** 02:42:C0:A8:01:XX (where XX = decimal 83-89 currently)
 
 ## Adding New Services
