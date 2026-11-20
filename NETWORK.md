@@ -13,6 +13,7 @@ All containers on the lab environment use the `my-macvlan-network` with the foll
 | **RabbitMQ** | rabbitmq | 192.168.1.134 | 02:42:C0:A8:01:86 | `/containers/rabbitmq` |
 | **PostgreSQL** | postgres | 192.168.1.135 | 02:42:C0:A8:01:87 | `/containers/postgres` |
 | **pgAdmin** | pgadmin | 192.168.1.136 | 02:42:C0:A8:01:88 | `/containers/postgres` |
+| **gitlab** | gitlab | 192.168.1.138 | 02:42:C0:A8:01:8A | `/containers/gitlab` |
 
 ## Virtual Machines (macvtap on enp3s0f1)
 
@@ -32,6 +33,7 @@ All containers on the lab environment use the `my-macvlan-network` with the foll
 | postgres.lab | 192.168.1.135 | PostgreSQL database |
 | pgadmin.lab | 192.168.1.136 | pgAdmin web UI |
 | windows.lab | 192.168.1.137 | Virtual machine running Windows 11 |
+| gitlab.lab | 192.168.1.138 | GitLab |
 
 ## SSL Certificates
 
@@ -47,7 +49,7 @@ Generated certificates are stored in each service's `certs/` folder:
 - **Base network:** 192.168.1.0/24
 - **Gateway:** 192.168.1.1
 - **Parent interface:** enp3s0f1
-- **Next available IP:** 192.168.1.138
+- **Next available IP:** 192.168.1.139
 - **MAC pattern:** 02:42:C0:A8:01:XX (where XX = decimal 83-89 currently)
 
 ## Adding New Services

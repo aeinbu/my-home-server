@@ -1,0 +1,36 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:19.5.6-ce.0
+    container_name: gitlab
+    hostname: gitlab.lab
+    restart: unless-stopped
+    shm_size: 256m
+    environment:
+      - TZ=Europe/Oslo
+      - |
+        GITLAB_OMNIBUS_CONFIG=
+        external_url 'https://gitlab.lab'
+        gitlab_rails['time_zone'] = 'Europe/Oslo'
+        gitlab_rails['gitlab_shell_ssh_port'] = 22
+        letsencrypt['enable'] = false
+        nginx['redirect_http_to_https'] = true
+        nginx['ssl_certificate'] = '/etc/gitlab/ssl/gitlab.lab.crt'
+        nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/gitlab.lab.key'
+        # Trim memory use for a lab server
+        prometheus_monitoring['enable'] = false
+        puma['worker_processes'] = 2
+        sidekiq['concurrency'] = 10
+    volumes:
+      - ./certs:/etc/gitlab/ssl:ro
+      - /data/gitlab/config:/etc/gitlab
+      - /data/gitlab/logs:/var/log/gitlab
+      - /data/gitlab/data:/var/opt/gitlab
+    networks:
+      my-macvlan-network:
+        ipv4_address: 192.168.1.138
+    mac_address: 02:42:C0:A8:01:8A
+
+networks:
+  my-macvlan-network:
+    external: true
+
